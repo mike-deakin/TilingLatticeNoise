@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFD398B8-68AB-4CCE-8895-55A94FB70F94}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>NoiseGeneration</RootNamespace>
+    <AssemblyName>NoiseGeneration</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BasicLerper.cs" />
+    <Compile Include="ILerper.cs" />
+    <Compile Include="INoiseGenerator.cs" />
+    <Compile Include="LatticeNoiseGenerator.cs" />
+    <Compile Include="IFader.cs" />
+    <Compile Include="PerlinQuinticFader.cs" />
+    <Compile Include="INoiseMaker.cs" />
+    <Compile Include="PerlinNoiseMaker.cs" />
+    <Compile Include="NoiseTile.cs" />
+    <Compile Include="RandomHashMaker.cs" />
+    <Compile Include="IProximity.cs" />
+    <Compile Include="ProximityPerlinGradient.cs" />
+    <Compile Include="MapEqualityComparer.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\NDimensionalArray\NDimensionalArray.csproj">
+      <Project>{0B98AD77-0C39-4A24-8925-A95D7C7F6ACE}</Project>
+      <Name>NDimensionalArray</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
