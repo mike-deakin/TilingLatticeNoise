@@ -32,7 +32,7 @@ class App
 		int hashSize = 129;
 		
 		//These determine the properties of so called "fractal noise".
-		//start_scale should be a power of 2 (2^n) less than hashSize and
+		//start_scale should be a power of 2 (2^n) smaller than hashSize and
 		//defines the scale of the noise. Higher numbers give higher frequency noise
 		//Layers determines how many iterations of noise are computed.
 		//For each layer, the scale of noise is doubled.
