@@ -12,7 +12,7 @@ namespace NoiseGeneration
 {
 	public class ValueProximity : IProximity
 	{
-		//Simple value noise. The hash vaule is just normalised to [0,1].
+		//Simple value noise. The hash vaule is just normalised to [0,1).
 		public float Proximity (int hash, params float[] coordinates)
 		{
 			return ((float)hash)/256f;

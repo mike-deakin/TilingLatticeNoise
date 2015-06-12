@@ -62,7 +62,7 @@ class App
 		
 		//To retrieve the generated noise data, retrieve the tile object
 		//from the generator by giving the coordinate again...
-		NoiseTile example_tile = ng.GetTile(3, 2);
+		NoiseTile example_tile = lng.GetTile(3, 2);
 		
 		//... and access the juicy data inside.
 		for (int x = 0; x < imgSize; x++){
