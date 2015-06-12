@@ -52,6 +52,7 @@
     <Compile Include="ScatterTile.cs" />
     <Compile Include="ValueProximity.cs" />
     <Compile Include="LinearFader.cs" />
+    <Compile Include="QuadraticFader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
