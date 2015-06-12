@@ -30,6 +30,7 @@ namespace NoiseGeneration
 
 			//After some pen-and-paper analysis, this gives more even results than Perlin's implementation!
 			//Equal probability of dotting with each vector.
+			//While this is nicer, it may not result in any improvement in visual quality.
 			//Hand verified for 2 and 3 dimensions only. (2/(dim*4) chance for each vector. i.e. 2/8 for 2d, 2/12 for 3d)
 		}
 	}
