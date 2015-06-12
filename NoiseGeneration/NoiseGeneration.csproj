@@ -51,6 +51,7 @@
     <Compile Include="BlueScatterNoiseGenerator.cs" />
     <Compile Include="ScatterTile.cs" />
     <Compile Include="ValueProximity.cs" />
+    <Compile Include="LinearFader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
