@@ -50,6 +50,7 @@
     <Compile Include="MapEqualityComparer.cs" />
     <Compile Include="BlueScatterNoiseGenerator.cs" />
     <Compile Include="ScatterTile.cs" />
+    <Compile Include="ValueProximity.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
