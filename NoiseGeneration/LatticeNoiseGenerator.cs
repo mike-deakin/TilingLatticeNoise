@@ -26,6 +26,13 @@ namespace NoiseGeneration
 		int m_oct_num;
 		float m_persistence;
 
+		//Constructor without lerper arg. Uses basic lerper (because I cannot see any other lerper implementation being used.
+		public LatticeNoiseGenerator (IFader fader, IProximity proximity,
+		                              int dimension, int resolution, int hash_size, int min_octave, int num_octave, float persistence)
+		{
+			LatticeNoiseGenerator (fader, new BasicLerper (), proximity, dimension, resolution, hash_size, min_octave, num_octave, persistence);
+		}
+
 		public LatticeNoiseGenerator (IFader fader, ILerper lerper, IProximity proximity,
 		                              int dimension, int resolution, int hash_size, int min_octave, int num_octave, float persistence)
 		{
