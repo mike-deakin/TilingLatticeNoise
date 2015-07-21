@@ -23,6 +23,8 @@ namespace NoiseGeneration
 		int m_oct_num; //Total octaves to compute over.
 		float m_persistence;
 
+		int m_perms;
+
 		NoiseTile m_curr_tile;
 		
 		public PerlinNoiseMaker (IFader fader, ILerper lerper, IProximity prox,
@@ -41,13 +43,19 @@ namespace NoiseGeneration
 			m_oct_min = min_octave;
 			m_oct_num = num_octave;
 			m_persistence = persistence;
+
+			//m_perms = 2^m_dim
+			m_perms = 2;
+			for (int a = 1; a < m_dim; a++) {
+				m_perms *= 2;
+			}
 		}
 
 		public void GenerateNoise (params int[] tile_coord){
 			int[] coord = tile_coord;
 			if (!m_tiles.TryGetValue (coord, out m_curr_tile)) {
 				//If there is no tile there, currently throw an exception. I want to create one instead though, but this is not simple.
-				//TODO: Instead throwing an exception, create the tile instead.
+				//TODO: Instead of throwing an exception, create the tile.
 				throw new ArgumentNullException ("tile_coord",
 				                                "The given coordinate did not contain a NoiseTile object to write to." +
 												"Please create one here first.");
@@ -55,13 +63,13 @@ namespace NoiseGeneration
 				int[] indicies = new int[m_dim];
 				int len = m_curr_tile.data.Size;
 				
-				for (int m = 0; m < m_dim; m++)
+				for (int m = 0; m < m_dim; m++) //First index = [0, 0, ...]
 					indicies [m] = 0;
 				
-				for (int i = 0; i < len; i++) { //For each element in the array...
-					m_curr_tile.data.SetAt((int)(FractalNoise(indicies)*255), indicies); // ... calculate noise...
-					for (int j = 0; j < m_dim; j++) { //... change the indicies array to reflect the next coordinate 
-						if (++indicies [j] == m_res) //indicies[j] == m_res would mean we've gone past the last index in that direction
+				for (int i = 0; i < len; i++) { 											//For each element in the array...
+					m_curr_tile.data.SetAt((int)(FractalNoise(indicies)*255), indicies); 	// ... calculate noise...
+					for (int j = 0; j < m_dim; j++) { 										//... change the indicies array to reflect the next coordinate 
+						if (++indicies [j] == m_res) 										//indicies[j] == m_res would mean we've gone past the last index in that direction
 							indicies [j] = 0;
 						else
 							break;
@@ -95,13 +103,12 @@ namespace NoiseGeneration
 			}
 
 			//Now to calculate proximity values and lerp recursively...
-			int perms = (int)Math.Pow (2, m_dim);
-			float[] proximities = new float[perms];
+			float[] proximities = new float[m_perms];
 
 			int[] curr_ints = new int[m_dim];
 			float[] curr_flts = new float[m_dim];
 
-			for (int j = 0; j < perms; j++) {
+			for (int j = 0; j < m_perms; j++) {
 				//This method neat, but probably slower and more memory intensive than need be by a large margin.
 				//Selects every permutation of picking from _low or _high in every dimension (2^dim of them)
 				//eg in 3d, selects indicies from(where 0 indicates _low, 1 indicates _high):

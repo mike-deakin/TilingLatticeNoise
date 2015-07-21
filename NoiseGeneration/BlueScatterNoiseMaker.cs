@@ -8,12 +8,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using System.Collections.Generic;
+
 namespace NoiseGeneration
 {
-	public class BlueScatterNoiseMaker
+	public class BlueScatterNoiseMaker : INoiseMaker
 	{
-		public BlueScatterNoiseMaker ()
+		public BlueScatterNoiseMaker (IFader fader, ILerper lerper, IProximity prox,
+		                              Dictionary<int[], ScatterTile> tiles, int dim, int resolution, int hash_size,
+		                              int oct_min, int oct_num, float persistence)
 		{
+		}
+
+		public void GenerateNoise(params int[] coordinates){
 		}
 	}
 }

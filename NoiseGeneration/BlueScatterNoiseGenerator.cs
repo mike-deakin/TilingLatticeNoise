@@ -44,14 +44,14 @@ namespace NoiseGeneration
 			m_noiseMaker = new BlueScatterNoiseMaker (m_fader, m_lerper, m_prox,
 			                                     m_tiles, m_dim, m_resolution, m_hash_size,
 			                                     m_oct_min, m_oct_num, m_persistence);
-			m_hashMaker = new RandomHashMaker (m_tiles, m_dim, m_hash_size);
+			//m_hashMaker = new RandomHashMaker (m_tiles, m_dim, m_hash_size);
 		}
 
 		public void GenerateNoiseTile(params int[] coordinates)
 		{
 			curr_tile = new ScatterTile (m_dim, m_hash_size);
-			m_tiles.Add (curr_tile);
-			m_hashMaker.GenerateHash (coordinates);
+			m_tiles.Add (coordinates, curr_tile);
+			//m_hashMaker.GenerateHash (coordinates);
 			m_noiseMaker.GenerateNoise (coordinates);
 		}
 	}
