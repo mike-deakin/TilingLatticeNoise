@@ -1,5 +1,13 @@
 # TilingLatticeNoise
-## A tiling and non-repeating adaptation of Perlin's improved noise algorithm generalised to n dimensions.
+#### A tiling and non-repeating adaptation of Perlin's improved noise algorithm generalised to n dimensions.
+
+#### ¡WARNING!
+  __*Noise generating algorithms generally take exponentially longer the bigger you make the target tile.*__
+  
+  __*This effect is especially true with this implementation, as this algorithm theoretically works in any number of dimensions, further increasing compute time the higher you go.*__
+  
+  __*It is not recomended you attempt to use this library (at least for Perlin Noise) in any more than 4 dimensions, and even then keep things as small as you can.*__
+
 
 For example usage, refer to example.cs.
 
@@ -8,7 +16,7 @@ Most interaction happens with a `LatticeNoiseGenerator` object. Calling `Generat
 This project is intended to be customisable and extensible to any noise generating regime you care to imagine.
 To create your own noise regime, extend as many of the interfaces as you need to and pass them into the constructor of your `LatticeNoiseGenerator`. Currently only Perlin noise has been implemented.
 
-### Interfaces, and roughly what they do
+#### The Interfaces, and roughly what they do
   * `INDArray`
     
     An N-dimensional array object. This is a standard array member with helper methods to make treating it like an N-dimensional object more human.
