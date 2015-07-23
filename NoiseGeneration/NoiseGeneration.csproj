@@ -48,12 +48,13 @@
     <Compile Include="IProximity.cs" />
     <Compile Include="ProximityPerlinGradient.cs" />
     <Compile Include="MapEqualityComparer.cs" />
-    <Compile Include="BlueScatterNoiseGenerator.cs" />
     <Compile Include="ScatterTile.cs" />
     <Compile Include="ValueProximity.cs" />
     <Compile Include="LinearFader.cs" />
     <Compile Include="QuadraticFader.cs" />
-    <Compile Include="BlueScatterNoiseMaker.cs" />
+    <Compile Include="ScatterNoiseGenerator.cs" />
+    <Compile Include="ScatterNoiseMaker.cs" />
+    <Compile Include="SparseWhiteNoiseMaker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace NoiseGeneration
 	{
 		int m_seed_size; //129 is a good number to use. End-user may want to change it (lower saves memory & time, higher allows high resolutions.
 
+		//TODO: Decouple this with NoiseTile.
 		Dictionary<int[], NoiseTile> m_tiles;
 		Random m_rng; //C# Pseudo random number generator. May replace with the Unity prng for that release.
 		int m_dim;
