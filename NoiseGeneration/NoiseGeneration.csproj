@@ -53,8 +53,8 @@
     <Compile Include="LinearFader.cs" />
     <Compile Include="QuadraticFader.cs" />
     <Compile Include="ScatterNoiseGenerator.cs" />
-    <Compile Include="ScatterNoiseMaker.cs" />
     <Compile Include="SparseWhiteNoiseMaker.cs" />
+    <Compile Include="JitterGridNoiseMaker.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
