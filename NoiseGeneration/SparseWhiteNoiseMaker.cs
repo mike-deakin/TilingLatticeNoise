@@ -18,18 +18,16 @@ namespace NoiseGeneration
 		int m_dimensions;
 		int m_points;
 
-		int m_rng_max = 256;
 		Random m_rng;
 
 		ScatterTile m_curr_tile;
 
-		public SparseWhiteNoiseMaker (Dictionary<int[], ScatterTile> tiles, int dimensions, int points, int seed, int rng_max = 256)
+		public SparseWhiteNoiseMaker (Dictionary<int[], ScatterTile> tiles, int dimensions, int points, int seed)
 		{
 			m_tiles = tiles;
 			m_dimensions = dimensions;
 			m_points = points;
 
-			m_rng_max = rng_max;
 			m_rng = new Random (seed);
 		}
 
@@ -42,11 +40,11 @@ namespace NoiseGeneration
 				                                 "The given coordinate did not contain a ScatterTile object to write to." +
 													"Please create one here first.");
 			} else {
-				int[] point = new int[m_dimensions];
-				List<int[]> tile_points = m_curr_tile.m_points;
+				double[] point = new double[m_dimensions];
+				List<double[]> tile_points = m_curr_tile.m_points;
 				for (int i = 0; i < m_points; i++){
 					for (int j = 0; j < m_dimensions; j++){
-						point[j] = m_rng.Next(m_rng_max);
+						point[j] = m_rng.NextDouble();
 					}
 					tile_points.Add(point); //Would it be quicker to save the points locally then copy with AddRange? Probably not a significant enough difference either way.
 				}
