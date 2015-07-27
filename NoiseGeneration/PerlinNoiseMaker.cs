@@ -121,8 +121,21 @@ namespace NoiseGeneration
 				//  {1,1,0}
 				//	{1,1,1}
 				// This is nice because it is scalable to any dimension, but it is slow.
-				curr_ints = SelectByPermIndicies<int>(j, ints_lo, ints_hi);
-				curr_flts = SelectByPermIndicies<float>(j, flts_lo, flts_hi);
+//				curr_ints = SelectByPermIndicies<int>(j, ints_lo, ints_hi);
+//				curr_flts = SelectByPermIndicies<float>(j, flts_lo, flts_hi);
+
+				int temp = j;
+
+				for (int m = 0; m < m_dim; m++){
+					if ((temp & 1) == 0){
+						curr_ints[m] = ints_lo;
+						curr_flts[m] = flts_lo;
+					} else {
+						curr_ints[m] = ints_hi;
+						curr_flts[m] = flts_hi;
+					}
+					temp >>= 1;
+				}
 				
 				proximities[j] = m_prox.Proximity(m_curr_tile.hash.GetAt(curr_ints), curr_flts);
 			}
