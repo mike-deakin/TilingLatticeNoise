@@ -128,11 +128,11 @@ namespace NoiseGeneration
 
 				for (int m = 0; m < m_dim; m++){
 					if ((temp & 1) == 0){
-						curr_ints[m] = ints_lo;
-						curr_flts[m] = flts_lo;
+						curr_ints[m] = ints_lo[m];
+						curr_flts[m] = flts_lo[m];
 					} else {
-						curr_ints[m] = ints_hi;
-						curr_flts[m] = flts_hi;
+						curr_ints[m] = ints_hi[m];
+						curr_flts[m] = flts_hi[m];
 					}
 					temp >>= 1;
 				}
