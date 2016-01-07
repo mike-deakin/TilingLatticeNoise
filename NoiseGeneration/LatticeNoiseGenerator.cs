@@ -34,14 +34,14 @@ namespace NoiseGeneration
 //		}
 
 		public LatticeNoiseGenerator (IFader fader, ILerper lerper, IProximity proximity,
-		                              int dimension, int resolution, int hash_size, int min_octave, int num_octave, float persistence)
+		                              int dimension, int resolution, int hash_power, int min_octave, int num_octave, float persistence)
 		{
 			m_fader = fader;
 			m_lerper = lerper;
 			m_prox = proximity;
 			m_dim = dimension;
 			m_resolution = resolution;
-			m_hash_size = hash_size;
+			m_hash_size = (1 << hash_power) + 1; //TODO: I switched to inputting the power. This may need to be cleaned up throughout.
 			m_oct_min = min_octave;
 			m_oct_num = num_octave;
 			m_persistence = persistence;
@@ -50,7 +50,7 @@ namespace NoiseGeneration
 			m_noiseMaker = new PerlinNoiseMaker (m_fader, m_lerper, m_prox,
 			                                     m_tiles, m_dim, m_resolution, m_hash_size,
 			                                     m_oct_min, m_oct_num, m_persistence);
-			m_hashMaker = new RandomHashMaker (m_tiles, m_dim, m_hash_size);
+			m_hashMaker = new RandomHashMaker (m_tiles, m_dim, hash_power);
 		}
 
 		public void GenerateNoiseTile(params int[] coordinates)

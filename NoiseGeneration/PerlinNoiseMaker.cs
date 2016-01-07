@@ -179,10 +179,10 @@ namespace NoiseGeneration
 		}
 
 		//Lerp between the calculated proximities.
-		private float RecursiveLerp(float[] proximities, float[] fades)
+		private float RecursiveLerp(float[] prox, float[] fades)
 		{
 			{
-				int pow2checker = proximities.Length;
+				int pow2checker = prox.Length;
 				while (pow2checker > 1) {
 					if (pow2checker % 2 != 0)
 						throw new ArgumentException ("Proximities must be a power of 2 in length!");
@@ -190,7 +190,6 @@ namespace NoiseGeneration
 				}
 			}
 
-			float[] prox = proximities;
 			float[] temp;
 			int iter = 0;
 			while (prox.Length > 1) {

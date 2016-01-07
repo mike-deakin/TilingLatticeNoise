@@ -1,0 +1,7 @@
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\bin\Debug\NoiseGeneration.dll
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\bin\Debug\NoiseGeneration.pdb
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\bin\Debug\NDimensionalArray.dll
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\bin\Debug\NDimensionalArray.pdb
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\obj\Debug\NoiseGeneration.csprojResolveAssemblyReference.cache
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\obj\Debug\NoiseGeneration.dll
+C:\Users\michael.deakin\git\TilingLatticeNoise\NoiseGeneration\obj\Debug\NoiseGeneration.pdb

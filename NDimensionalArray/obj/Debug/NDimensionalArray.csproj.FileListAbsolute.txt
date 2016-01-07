@@ -1,0 +1,4 @@
+C:\Users\michael.deakin\git\TilingLatticeNoise\NDimensionalArray\bin\Debug\NDimensionalArray.dll
+C:\Users\michael.deakin\git\TilingLatticeNoise\NDimensionalArray\bin\Debug\NDimensionalArray.pdb
+C:\Users\michael.deakin\git\TilingLatticeNoise\NDimensionalArray\obj\Debug\NDimensionalArray.dll
+C:\Users\michael.deakin\git\TilingLatticeNoise\NDimensionalArray\obj\Debug\NDimensionalArray.pdb

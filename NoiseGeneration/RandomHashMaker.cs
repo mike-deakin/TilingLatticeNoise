@@ -5,6 +5,10 @@ namespace NoiseGeneration
 {
 	public class RandomHashMaker
 	{
+		int m_temp_sleft;
+		int m_temp_sright;
+		int m_seed_pow; //TODO: Use this instead of m_seed_size as input.
+		//m_seed_size = (2^m_seed_pow)+1
 		int m_seed_size; //129 is a good number to use. End-user may want to change it (lower saves memory & time, higher allows high resolutions.
 
 		//TODO: Decouple this with NoiseTile.
@@ -12,11 +16,12 @@ namespace NoiseGeneration
 		Random m_rng; //C# Pseudo random number generator. May replace with the Unity prng for that release.
 		int m_dim;
 		
-		public RandomHashMaker (Dictionary<int[], NoiseTile> tiles, int dimensions, int seed_size)
+		public RandomHashMaker (Dictionary<int[], NoiseTile> tiles, int dimensions, int seed_pow)
 		{
 			m_tiles = tiles;
 			m_dim = dimensions;
-			m_seed_size = seed_size;
+			m_seed_pow = seed_pow;
+			m_seed_size = (1 << seed_pow) + 1; //(2^seed_pow) + 1
 		}
 
 		public void GenerateHash(params int[] tile_coord){
@@ -34,9 +39,12 @@ namespace NoiseGeneration
 																  //End-user may want to set a seed by some other means for reapeatable results.
 			int[] seed = new int[m_seed_size];
 
+			m_temp_sleft = m_rng.Next (0, 512);
+			m_temp_sright = m_rng.Next (0, 512);
+
 			{ //initialise the seed array
 				int i, j, k; //temp vars.
-				for (i = 0; i < m_seed_size; i++) { //fill first half of seed[] with numbers 0 to (m_seed_size - 1).
+				for (i = 0; i < m_seed_size; i++) { //fill seed[] with numbers 0 to (m_seed_size - 1).
 					seed [i] = i;
 				}
 
@@ -126,17 +134,70 @@ namespace NoiseGeneration
 		private int ReentrantHash(int[] coord, int[] seed){
 			int len = coord.Length;
 
-			int result = seed[coord[len-1]];
-			for (int i = len - 2; i >=0; i--) {
-				result = seed[(coord[i] + result) % m_seed_size];
-			}
-
-//			int result = 0;
-//			for (int i = 0; i < len; i++) {
+//			int result = seed[coord[len-1]];
+//			for (int i = len - 2; i >=0; i--) {
 //				result = seed[(coord[i] + result) % m_seed_size];
 //			}
+//
+			int result = m_rng.Next (0, m_seed_size); //This appears to be fine. sooooo hashing is not needed?
+			//My guess is that hashing was a space saving tool. Perlin's hash is clever but based on
+			//a predetermined (hard-coded) seed. My solution naively bakes the hash results to a larger array.
+			//The hash then is redundant if any suitably independent rng/hash can produce the baked values.
+			//Then the question becomes can I save memory and keep determinism at tile borders?
+			//Can I expand my rng somehow?
+			//Currently, in effect, a random number is generated and then assigned to each pixel.
+			//Is there an alternative, such that {seed, x, y, z, ...} -> [0, 255] and (seed, x + 1, y, z,...) cannot be "predicted"?
+			//(To use the fuzzy crypto terminology)
+			//If this can be done (and I suspect it can), the only difficulty left is to handle the changing seed at the border.
+
+			//Another not on Perlin's implementation: Part of it's nature is that the seed contains each value once.
+			//This might (?) reduce the probability of visual defects but reduces the number of unique tiles.
+			//Not really a big deal imo, benefits outweigh this a lot, but it's worth noting since people are
+			//implementing noise with longer periodicity.
+
+			//A (dumb?) suggestion: seed rng with seed. cycle x times, then y more times, then z, etc.?
+			//That's slow. At worst, n^imgSize!!!
+			//A simple block cypher might do the trick. eg a Feistel or Lai-Massey. doesn't have to be crypto secure.
+			//Have n rounds (where n is num of dimensions) with keys k1=x, k2=y etc.
+			//The "message" can be a random seed.
+
+			//TESTING Feistel generation. If this works, then don't need to bake.
+			//int result = FeistelNHash(m_temp_sleft, m_temp_sright, coord)[0];
 
 			return result;
+		}
+
+		private int[] FeistelNHash(int sleft, int sright, int[] coord){
+			//Experiment:
+			//Using a feistel network to hash the coordinates with a seed that is set with each tile.
+			//Let seedL and seedR be  the "Plaintext" and the coordinates be the "round keys"
+
+			int rounds = coord.Length;
+			int L = sleft;
+			int R = sright;
+
+			for (int i = 0; i < rounds; i++) {
+				int temp = R;
+				R = L ^ FeistelRound (R, coord [i]);
+				L = temp;
+			}
+
+			int[] result = new int[2];
+			result[0] = L;
+			result[1] = R;
+
+			return result;
+		}
+
+		private int FeistelRound(int right, int k){
+			//Round function to acompany the fiestel hash.
+			int kexp = KeyExpand(k); //First, expand k to n+1 bits.
+
+			return kexp ^ right; //Testing a very basic round method. Not expecting good results. Update: Did not get good results.
+		}
+
+		private int KeyExpand(int k){
+			return (int)((((k * 25214903917) + 11) % (2 << 48)) >> 16) % (2 << (m_seed_pow + 1)); //Java linear congruential generator numbers then take mod 2^(m_seed_pow+1)
 		}
 	}
 }
