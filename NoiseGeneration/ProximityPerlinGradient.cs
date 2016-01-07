@@ -6,7 +6,7 @@ namespace NoiseGeneration
 		public float Proximity(int hash, params float[] coordinates){
 			//My own simple, n-dimensional version.
 			//Easily extends to n dimensions, but not the same as Perlin's alg.
-			//Uses different unit vectors, so may produce defects?
+			//Uses different unit vectors, so may produce defects? None that I can see as yet.
 
 			//Uses the values of the n least significant bits to add or subtract the coordinate val.
 			//Equiv to the dot prod of inner loc vector and a selected vector form n-cube centre to a vertex.
@@ -28,7 +28,7 @@ namespace NoiseGeneration
 			}
 			return (result);
 
-			//After some pen-and-paper analysis, this gives more even results than Perlin's implementation!
+			//After some pen-and-paper analysis, this gives more even results than Perlin's implementation!(?)
 			//Equal probability of dotting with each vector.
 			//While this feels nicer, it may not result in any improvement in visual quality.
 			//Hand verified for 2 and 3 dimensions only. (2/(dim*4) chance for each vector. i.e. 2/8 for 2d, 2/12 for 3d)

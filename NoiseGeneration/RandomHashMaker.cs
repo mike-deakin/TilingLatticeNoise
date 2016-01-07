@@ -15,6 +15,8 @@ namespace NoiseGeneration
 		Dictionary<int[], NoiseTile> m_tiles;
 		Random m_rng; //C# Pseudo random number generator. May replace with the Unity prng for that release.
 		int m_dim;
+
+		int m_dim_area;
 		
 		public RandomHashMaker (Dictionary<int[], NoiseTile> tiles, int dimensions, int seed_pow)
 		{
@@ -22,6 +24,7 @@ namespace NoiseGeneration
 			m_dim = dimensions;
 			m_seed_pow = seed_pow;
 			m_seed_size = (1 << seed_pow) + 1; //(2^seed_pow) + 1
+			m_dim_area = 2 << m_dim; //2^(m_dim + 1)
 		}
 
 		public void GenerateHash(params int[] tile_coord){
@@ -106,6 +109,7 @@ namespace NoiseGeneration
 						}
 					}
 
+					//Don't need this? Only need to check ahead of the current tile?
 					neighbor_coord[i] -= 2; //'previous' tile in current direction.
 
 					if (m_tiles.TryGetValue(neighbor_coord, out neighbor)){
@@ -138,8 +142,10 @@ namespace NoiseGeneration
 //			for (int i = len - 2; i >=0; i--) {
 //				result = seed[(coord[i] + result) % m_seed_size];
 //			}
-//
-			int result = m_rng.Next (0, m_seed_size); //This appears to be fine. sooooo hashing is not needed?
+
+			//Only need to go up to m_dim bits for my gradient? Possible, but not nice results.
+			//m_dim + 1 bits is fine though?
+			int result = m_rng.Next (0, m_dim_area); //This appears to be fine. sooooo hashing is not needed?
 			//My guess is that hashing was a space saving tool. Perlin's hash is clever but based on
 			//a predetermined (hard-coded) seed. My solution naively bakes the hash results to a larger array.
 			//The hash then is redundant if any suitably independent rng/hash can produce the baked values.
@@ -163,6 +169,7 @@ namespace NoiseGeneration
 
 			//TESTING Feistel generation. If this works, then don't need to bake.
 			//int result = FeistelNHash(m_temp_sleft, m_temp_sright, coord)[0];
+			//It doesn't...
 
 			return result;
 		}
